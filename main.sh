@@ -8,6 +8,8 @@ do
   echo "#3) Micro Text Editor";
   echo "#4) Play Minesweeper";
   echo "#5) Play Pacman";
+  echo "#6) Open Terminal";
+  echo "#7) Open Python 3.9 Interpreter";
   echo "\r\n";
   echo "[Contribute]"
   
@@ -41,6 +43,16 @@ do
     echo "Playing Pacman...";
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/pacman.sh;
+  fi;
+  if [[ $var = "6" ]]; then
+    echo "Playing Terminal...";
+    sleep 1;
+    bash ./LeafEnv-Contributed-Apps/terminal.sh;
+  fi;
+  if [[ $var = "7" ]]; then
+    echo "Playing Python 3.9 Interpreter...";
+    sleep 1;
+    bash ./LeafEnv-Contributed-Apps/python.sh;
   fi;
   
   sleep 3;
