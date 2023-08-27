@@ -11,6 +11,7 @@ do
   echo "#6) Open Terminal";
   echo "#7) Open Python 3.9 Interpreter";
   echo "#8) Open Clock";
+  echo "#9) Open PRG Interpreter";
   echo "\r\n";
   echo "[Contribute]"
   
@@ -59,6 +60,11 @@ do
     echo "Playing Clock...";
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/clock.sh;
+  fi;
+  if [[ $var = "9" ]]; then
+    echo "Playing PRG Interpreter...";
+    sleep 1;
+    bash ./LeafEnv-Contributed-Apps/prg3;
   fi;
   
   sleep 3;
