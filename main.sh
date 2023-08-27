@@ -28,7 +28,7 @@ do
   if [[ $var = "4" ]]; then
     echo "Playing Minesweeper...";
     sleep 1;
-    bash ./LeafEnv-Contributed-Apps/micro.sh;
+    bash ./LeafEnv-Contributed-Apps/minesweeper.sh;
   fi;
   
   sleep 3;
