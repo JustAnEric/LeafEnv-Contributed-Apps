@@ -22,6 +22,7 @@ do
   echo "#9) Open PRG Interpreter";
   echo "#10) Open Lynx Text-based Browser";
   echo "#11) Play Tetris (bash)";
+  echo "#12) Open Nodeterm (LeafEnv default application)"
   tput setaf 9;
   tput setab 9;
   echo;
@@ -89,6 +90,11 @@ do
     echo "Playing Tetris-bash...";
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/tetris.sh;
+  fi;
+  if [[ $var = "12" ]]; then
+    echo "Playing Nodeterm...";
+    sleep 1;
+    bash ./LeafEnv-Contributed-Apps/nodeterm.sh;
   fi;
   
   sleep 3;
