@@ -1,3 +1,4 @@
+clear;
 echo "LeafEnv Terminal - CA 2023";
 while true
 do
