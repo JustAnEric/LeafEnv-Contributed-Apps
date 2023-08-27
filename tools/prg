@@ -1,0 +1,240 @@
+#!/bin/python3
+# Interpreter for PRG v3
+
+import os, sys
+
+class COL_S:
+  HEADER = '\033[95m'
+  OKBLUE = '\033[94m'
+  OKCYAN = '\033[96m'
+  OKGREEN = '\033[92m'
+  WARNING = '\033[93m'
+  FAIL = '\033[91m'
+  ENDC = '\033[0m'
+  BOLD = '\033[1m'
+  UNDERLINE = '\033[4m'
+
+class TEMPORARY:
+	data = {
+		"SCRIPTS": {
+			"IMPORTS": [],
+			"FUNCTIONS": []
+		}
+	}
+	def GETDATA():
+		return TEMPORARY.data
+
+interpreter = {
+	"SETTINGS": {
+		"MESSAGES": {
+			"active": 1
+		}
+	}
+}
+
+class Environment():
+	def load_file(path):
+		try:
+			file = open(f'{path}','r')
+		except: return print("Unable to read file. It either does not exist or the file is disabled (PRG disabled service keeps it from running)")
+		return (file or 0)
+	def interpret(data:str, file="./"):
+		# interpret a piece of data/string from a file or from the command line tool
+		try:
+			lines = data.readlines()
+		except: lines = str(data).split("\n") # split on all newlines
+		currentLine = 0
+		recordingFunction = 0
+		for _ in lines:
+			# for each line
+			currentLine += 1
+			if "prnt " in str(_):
+				if recordingFunction == 1: pass
+				else:
+					# print a string to the console
+					try:
+						print(_.split('\"')[1].split('\"')[0]) # grab the string in the double quotes
+					except:
+						try:
+							print(_.split("\'")[1].split("\'")[0]) # grab the string in the single quotes
+						except:
+							# Throw an error
+							return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, cannot print empty string or query:{COL_S.ENDC}\n    {_}")
+			elif "comnd " in str(_):
+				if recordingFunction == 1: pass
+				else:
+					# execute a console command (asyncronous)
+					os.system(_.split("comnd ")[1].split("\n")[0])
+			elif "import " in str(_):
+				# (needs to) require a script
+				scriptName = str(_.split("import \"")[1].split("\"\n")[0])
+				# check if this script exists in the project directory
+				try: open(scriptName, 'r').read()
+				except:
+					return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, unknown import file:{COL_S.ENDC}\n    {_}\n{scriptName}")
+				TEMPORARY.data["SCRIPTS"]["IMPORTS"].append({
+					"script": f"{scriptName}",
+					"referenceLine": f"{currentLine}",
+					"invoked": True,
+					"file": {
+						"rawData": open(scriptName, 'r'),
+						"lines": open(scriptName, 'r').readlines(),
+						"processRead": 1,
+						"processWritePCache": 0
+					}
+				})
+			elif "fimports" in str(_):
+				Environment.load_imports(TEMPORARY.data["SCRIPTS"]["IMPORTS"])
+			elif str(_).startswith("#!") and (currentLine == 1 or currentLine == 0):
+				# reject and ignore
+				pass
+			elif str(_).startswith("interpreterMessages("):
+				# set interpreter messages variable
+				value = int(_.split("interpreterMessages(")[1].split(")")[0])
+				interpreter["SETTINGS"]["MESSAGES"]["active"] = int(value)
+			elif str(_).startswith("funct "):
+				# register a function
+				TEMPORARY.data["SCRIPTS"]["FUNCTIONS"].append({
+					"code": {
+						"raw": Environment.watch_function(_.split("funct ")[1].split("(")[0], data)
+					},
+					"name": _.split("funct ")[1].split("(")[0],
+					"visibleToOtherFiles": 1
+				})
+				recordingFunction = 1
+			elif str(_).startswith("] funct end "):
+				recordingFunction = 0
+				pass
+			elif str(_).startswith("runf "):
+				fulfilled = 0
+				functionName = _.split("runf ")[1].split("()")[0]
+				# run the function's registered code under an interpreter
+				for d in TEMPORARY.data["SCRIPTS"]["FUNCTIONS"]:
+					if d["name"] == functionName:
+						# same function
+						Environment.function_interpret(str(d["code"]["raw"]),str(data))
+						fulfilled = 1
+				if fulfilled == 1: pass
+				else: return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, function ({functionName}) does not exist or has not been defined:{COL_S.ENDC}\n    {_}")
+
+			elif str(_) in ("\n" or None): pass
+			else:
+				# Throw an error as it is undefined
+				return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, cannot use an undefined expression:{COL_S.ENDC}\n   {_} ")
+
+	def function_interpret(fdata, fullData):
+		edit = str(fdata).split("\n")
+		currentLine = 0
+		for _ in edit:
+			currentLine += 1
+			if "prnt " in str(_):
+				if recordingFunction == 1: pass
+				else:
+					# print a string to the console
+					try:
+						print(_.split('\"')[1].split('\"')[0]) # grab the string in the double quotes
+					except:
+						try:
+							print(_.split("\'")[1].split("\'")[0]) # grab the string in the single quotes
+						except:
+							# Throw an error
+							return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, cannot print empty string or query:{COL_S.ENDC}\n    {_}")
+			elif "comnd " in str(_):
+				if recordingFunction == 1: pass
+				else:
+					# execute a console command (asyncronous)
+					os.system(_.split("comnd ")[1].split("\n")[0])
+			elif "import " in str(_):
+				# (needs to) require a script
+				scriptName = str(_.split("import \"")[1].split("\"\n")[0])
+				# check if this script exists in the project directory
+				try: open(scriptName, 'r').read()
+				except:
+					return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, unknown import file:{COL_S.ENDC}\n    {_}\n{scriptName}")
+				TEMPORARY.data["SCRIPTS"]["IMPORTS"].append({
+					"script": f"{scriptName}",
+					"referenceLine": f"{currentLine}",
+					"invoked": True,
+					"file": {
+						"rawData": open(scriptName, 'r'),
+						"lines": open(scriptName, 'r').readlines(),
+						"processRead": 1,
+						"processWritePCache": 0
+					}
+				})
+			elif "fimports" in str(_):
+				Environment.load_imports(TEMPORARY.data["SCRIPTS"]["IMPORTS"])
+			elif str(_).startswith("#!") and (currentLine == 1 or currentLine == 0):
+				# reject and ignore
+				pass
+			elif str(_).startswith("interpreterMessages("):
+				# set interpreter messages variable
+				value = int(_.split("interpreterMessages(")[1].split(")")[0])
+				interpreter["SETTINGS"]["MESSAGES"]["active"] = int(value)
+			elif str(_).startswith("funct "):
+				# register a function
+				TEMPORARY.data["SCRIPTS"]["FUNCTIONS"].append({
+					"code": {
+						"raw": Environment.watch_function(_.split("funct ")[1].split("(")[0], data)
+					},
+					"name": _.split("funct ")[1].split("(")[0],
+					"visibleToOtherFiles": 1
+				})
+				recordingFunction = 1
+			elif str(_).startswith("] funct end "):
+				recordingFunction = 0
+				pass
+			elif str(_).startswith("runf "):
+				fulfilled = 0
+				functionName = _.split("runf ")[1].split("()")[0]
+				# run the function's registered code under an interpreter
+				for d in TEMPORARY.data["SCRIPTS"]["FUNCTIONS"]:
+					if d["name"] == functionName:
+						# same function
+						Environment.function_interpret(d["code"]["raw"],str(fullData))
+						fulfilled = 1
+				if fulfilled == 1: pass
+				else: return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, function ({functionName}) does not exist or has not been defined:{COL_S.ENDC}\n    {_}")
+
+			elif str(_) in ("\n" or None): pass
+			else:
+				# Throw an error as it is undefined
+				return print(f"{COL_S.FAIL}INTERPRETER: on line {currentLine}, cannot use an undefined expression:{COL_S.ENDC}\n   {_} ")
+	def load_imports(wm):
+		for i in wm:
+			Environment.interpret(i["file"]["rawData"]) # we interpret the file's data
+			i["file"]["processWritePCache"] = 1
+		if interpreter["SETTINGS"]["MESSAGES"]["active"] == 1:
+			print("INTERPRETER: Imported all nessacery files. To disable this message, initialise interpreterMessages(0) in your main and import scripts.")
+		else: pass
+
+	def watch_function(name, data):
+		try:
+			io = data.read()
+			code = io.split(f"funct {name}")[1].split("[\n")[1].split("] end funct {name}")[0]
+		except: return f"prnt 'Sorry, your function was ended incorrectly. The interpreter replaced this function with a print message.'" and print(f"INTERPRETER: We have failed to read the contents of {name}(). Please recheck you're ending the function {name} correctly, or edit your code and get some help.")
+
+class CLI():
+  def __init__(*args):
+    print("PRG v3 Command Line Interface - Tools and Utilities")
+    print(f"{COL_S.OKBLUE}Welcome to the PRG interface.{COL_S.ENDC} {COL_S.OKCYAN}To get packages, direct to the prgmgr command.{COL_S.ENDC}")
+    try: sys.argv[1]
+    except:
+      while True:
+        try:
+          while True:
+            ask = input(">> ")
+            if ask == "exit()":
+              return sys.exit(1)
+            Environment.interpret(ask)
+        except KeyboardInterrupt: print("To exit use CTRL-D or exit()"); pass
+    sys.exit(1)
+
+if __name__ == "__main__":
+  # run the file if it is root
+  try:
+    os.path.exists(sys.argv[1])
+  except:
+    CLI(sys.argv)
+  data = Environment.load_file(sys.argv[1])
+  interpreter = Environment.interpret(data, sys.argv[1])
