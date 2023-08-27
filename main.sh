@@ -2,6 +2,8 @@ clear;
 echo "LeafEnv Contributed Apps";
 echo "#1) Play Snake";
 echo "#2) NANO Text Editor";
+echo "\n";
+echo "[Contribute]"
 
 read var;
 if [[ $var = "1" ]]; then
@@ -14,5 +16,6 @@ if [[ $var = "2" ]]; then
   sleep 1;
   bash ./LeafEnv-Contributed-Apps/nano.sh;
 fi;
+if [[]]
 
 sleep 3;
