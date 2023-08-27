@@ -2,6 +2,9 @@ while true
 do
   clear;
   echo "LeafEnv Contributed Apps";
+  echo;
+  echo "Made possible by the LeafEnv project and justaneric.";
+  echo;
   echo "#0) Exit";
   echo "#1) Play Snake [SOON]";
   echo "#2) NANO Text Editor";
