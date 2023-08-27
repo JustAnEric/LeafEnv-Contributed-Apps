@@ -20,6 +20,8 @@ do
   echo "#7) Open Python 3.9 Interpreter";
   echo "#8) Open Clock";
   echo "#9) Open PRG Interpreter";
+  echo "#10) Open Lynx Text-based Browser";
+  echo "#11) Play Tetris (bash)";
   tput setaf 9;
   tput setab 9;
   echo;
@@ -77,6 +79,16 @@ do
     echo "Playing PRG Interpreter...";
     sleep 1;
     python3 ./LeafEnv-Contributed-Apps/tools/prg3;
+  fi;
+  if [[ $var = "10" ]]; then
+    echo "Playing Lynx Text-based Browser...";
+    sleep 1;
+    python3 ./LeafEnv-Contributed-Apps/lynx.sh;
+  fi;
+  if [[ $var = "11" ]]; then
+    echo "Playing Tetris-bash...";
+    sleep 1;
+    python3 ./LeafEnv-Contributed-Apps/tetris.sh;
   fi;
   
   sleep 3;
