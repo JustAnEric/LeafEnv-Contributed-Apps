@@ -1,0 +1,1 @@
+clear; lynx; clear; exit;
