@@ -2,10 +2,11 @@ while true
 do
   clear;
   echo "LeafEnv Contributed Apps";
-  echo "#1) Play Snake";
+  echo "#1) Play Snake [SOON]";
   echo "#2) NANO Text Editor";
   echo "#3) Micro Text Editor";
-  echo "#4) Minesweeper"
+  echo "#4) Play Minesweeper";
+  echo "#5) Play Pacman";
   echo "\n";
   echo "[Contribute]"
   
@@ -29,6 +30,11 @@ do
     echo "Playing Minesweeper...";
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/minesweeper.sh;
+  fi;
+  if [[ $var = "4" ]]; then
+    echo "Playing Minesweeper...";
+    sleep 1;
+    bash ./LeafEnv-Contributed-Apps/pacman.sh;
   fi;
   
   sleep 3;
