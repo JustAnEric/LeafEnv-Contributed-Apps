@@ -1,6 +1,6 @@
 echo "LeafEnv Terminal - CA 2023";
 while true
 do
-  read variable -p "> ";
+  read -p "> " variable;
   command $variable;
 done;
