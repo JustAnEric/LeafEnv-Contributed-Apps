@@ -3,6 +3,8 @@ echo "LeafEnv Terminal - CA 2023";
 while true
 do
   read -p "> " variable;
+  if [[ $variable = "main" ]]; then
+    exit;
+  fi;
   command $variable;
-  bash ./LeafEnv-Contributed-Apps/main.sh
 done;
