@@ -4,7 +4,8 @@ do
   echo "LeafEnv Contributed Apps";
   echo "#1) Play Snake";
   echo "#2) NANO Text Editor";
-  echo "#3) Micro Text Editor"
+  echo "#3) Micro Text Editor";
+  echo "#4) Minesweeper"
   echo "\n";
   echo "[Contribute]"
   
@@ -21,6 +22,11 @@ do
   fi;
   if [[ $var = "3" ]]; then
     echo "Playing Micro Text Editor...";
+    sleep 1;
+    bash ./LeafEnv-Contributed-Apps/micro.sh;
+  fi;
+  if [[ $var = "4" ]]; then
+    echo "Playing Minesweeper...";
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/micro.sh;
   fi;
