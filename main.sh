@@ -83,12 +83,12 @@ do
   if [[ $var = "10" ]]; then
     echo "Playing Lynx Text-based Browser...";
     sleep 1;
-    python3 ./LeafEnv-Contributed-Apps/lynx.sh;
+    bash ./LeafEnv-Contributed-Apps/lynx.sh;
   fi;
   if [[ $var = "11" ]]; then
     echo "Playing Tetris-bash...";
     sleep 1;
-    python3 ./LeafEnv-Contributed-Apps/tetris.sh;
+    bash ./LeafEnv-Contributed-Apps/tetris.sh;
   fi;
   
   sleep 3;
