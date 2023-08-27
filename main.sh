@@ -1,10 +1,13 @@
 while true
 do
   clear;
+  tput setaf 46;
   echo "LeafEnv Contributed Apps";
   echo;
+  tput setaf 45;
   echo "Made possible by the LeafEnv project and justaneric.";
   echo;
+  tput setaf 250;
   echo "#0) Exit";
   echo "#1) Play Snake [SOON]";
   echo "#2) NANO Text Editor";
