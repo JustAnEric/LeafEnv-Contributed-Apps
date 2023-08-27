@@ -249,6 +249,6 @@ draw_board
 game_loop &
 game_pid=$!
 getchar
-
+sleep 3;
 clear_game
 exit 0
