@@ -8,3 +8,4 @@ if [[$var = "1"]]; then
   sleep 1;
   bash ./LeafEnv-Contributed-Apps/snake.sh;
 fi;
+sleep 3;
