@@ -37,8 +37,8 @@ do
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/minesweeper.sh;
   fi;
-  if [[ $var = "4" ]]; then
-    echo "Playing Minesweeper...";
+  if [[ $var = "5" ]]; then
+    echo "Playing Pacman...";
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/pacman.sh;
   fi;
