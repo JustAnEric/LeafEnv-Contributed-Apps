@@ -18,8 +18,10 @@ do
   echo "#7) Open Python 3.9 Interpreter";
   echo "#8) Open Clock";
   echo "#9) Open PRG Interpreter";
-  echo "\r\n";
-  echo "[Contribute]"
+  echo;
+  tput blink;
+  echo "[Contribute]";
+  tput sgr0;
   
   read var;
   if [[ $var = "0" ]]; then
