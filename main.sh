@@ -64,7 +64,7 @@ do
   if [[ $var = "9" ]]; then
     echo "Playing PRG Interpreter...";
     sleep 1;
-    bash ./LeafEnv-Contributed-Apps/tools/prg3;
+    python3 ./LeafEnv-Contributed-Apps/tools/prg3;
   fi;
   
   sleep 3;
