@@ -10,6 +10,7 @@ do
   echo "#5) Play Pacman";
   echo "#6) Open Terminal";
   echo "#7) Open Python 3.9 Interpreter";
+  echo "#8) Open Clock";
   echo "\r\n";
   echo "[Contribute]"
   
@@ -53,6 +54,11 @@ do
     echo "Playing Python 3.9 Interpreter...";
     sleep 1;
     bash ./LeafEnv-Contributed-Apps/python.sh;
+  fi;
+  if [[ $var = "8" ]]; then
+    echo "Playing Clock...";
+    sleep 1;
+    bash ./LeafEnv-Contributed-Apps/clock.sh;
   fi;
   
   sleep 3;
