@@ -2,15 +2,21 @@ while true
 do
   clear;
   echo "LeafEnv Contributed Apps";
+  echo "#0) Exit";
   echo "#1) Play Snake [SOON]";
   echo "#2) NANO Text Editor";
   echo "#3) Micro Text Editor";
   echo "#4) Play Minesweeper";
   echo "#5) Play Pacman";
-  echo "\n";
+  echo "\r\n";
   echo "[Contribute]"
   
   read var;
+  if [[ $var = "0" ]]; then
+    echo "Exiting LECA...";
+    sleep 1;
+    exit;
+  fi;
   if [[ $var = "1" ]]; then
     echo "Playing Snake...";
     sleep 1;
