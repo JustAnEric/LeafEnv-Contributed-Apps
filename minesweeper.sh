@@ -34,7 +34,7 @@ function newgame()
 
   echo -n $'\e[0m'
   clear
-  echo 'Mine Sweeper   version 1.1   august 2008   written by Feherke'
+  echo 'Mine Sweeper   version 1.1   august 2008   written by JustAnEric'
   echo "board : ${size[n*4]}   size : $mx*$my   mine : $mb   flag : $mf    "$'\e[43;30m:)\e[0m'
 
   for ((i=0;i<mx*my;i++)); do bomb[i]=0; board[i]=9; done
