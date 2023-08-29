@@ -4,6 +4,17 @@ do
   tput setaf 46;
   echo "LeafEnv Contributed Apps";
   echo;
+  determinedPlatform=false;
+  if [[ $platform = "lepkg" ]]; then
+    determinedPlatform=true;
+    command cd ./pkgs;
+  fi;
+  if [[ $platform = "lepubl" ]]; then
+    determinedPlatform=true;
+  fi;
+  if [[ $determinedPlatform = false ]]; then
+    echo "Undetermined platform. Has to be either LeafEnv or LeafPkgs.";
+  fi;
   tput setaf 45;
   echo "Made possible by the LeafEnv project and justaneric.";
   echo;
